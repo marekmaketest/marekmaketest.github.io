@@ -1,0 +1,129 @@
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konsultacje Indywidualne</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+        }
+        .left-side {
+            width: 50%;
+            padding-right: 20px;
+        }
+        .right-side {
+            width: 50%;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3e8e41;
+        }
+        .message {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <h1>Konsultacje Indywidualne</h1>
+            <p>Opis konsultacji indywidualnych. Tutaj możesz umieścić szczegółowe informacje o tym, co oferujesz w ramach konsultacji, jakie korzyści płyną z udziału i dla kogo są one przeznaczone.</p>
+        </div>
+        <div class="right-side">
+            <h2>Zapisz się na konsultację</h2>
+            <form id="consultation-form">
+                <label for="first_name">Imię:</label>
+                <input type="text" id="first_name" name="first_name" required>
+
+                <label for="last_name">Nazwisko:</label>
+                <input type="text" id="last_name" name="last_name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone">Telefon:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <button type="submit">Zapisz się</button>
+            </form>
+            <div class="message" id="success-message">Dziękuję, skontaktuję się z Tobą w najbliższym dniu roboczym. Telefonicznie lub mailowo.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('consultation-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const firstName = document.getElementById('first_name').value;
+            const lastName = document.getElementById('last_name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            const data = {
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                phone: phone
+            };
+
+            fetch('https://hook.eu2.make.com/6ngz448ax6m1kbcx754ljlok10x1kmop', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('consultation-form').reset();
+                } else {
+                    alert('Wystąpił błąd podczas zapisu.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Wystąpił błąd podczas zapisu.');
+            });
+        });
+    </script>
+</body>
+</html>
